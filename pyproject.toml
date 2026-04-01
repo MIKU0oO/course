@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "news-rag"
+version = "0.1.0"
+description = "Industrialized Chinese news RAG project"
+requires-python = ">=3.10"
+
+[project.scripts]
+news-rag = "news_rag.cli:main"
+news-rag-evaluate = "news_rag.tools.evaluate:run_evaluation_cli"
+news-rag-generate-test-set = "news_rag.tools.generate_test_set:main"
+news-rag-getdata = "news_rag.tools.getdata:main"
+news-rag-build-subset-embeddings = "news_rag.tools.build_subset_embeddings:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

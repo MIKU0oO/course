@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NewsRAG Search</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="page-overlay"></div>
+
+  <div class="app-shell" id="appShell">
+    <header class="search-header">
+      <div class="brand-area">
+        <a class="brand-wordmark" href="/">NewsRAG</a>
+      </div>
+
+      <form class="header-search" id="searchForm">
+        <input
+          id="searchInput"
+          name="query"
+          type="text"
+          class="search-input"
+          placeholder="搜索新闻问题，例如：5月18日至19日中国-中亚峰会在哪里举行？"
+          autocomplete="off"
+        >
+        <button class="search-button" id="searchButton" type="submit">搜索</button>
+      </form>
+
+      <div class="header-meta" id="topbarStatus">中文新闻搜索问答</div>
+    </header>
+
+    <main class="page-main">
+      <section class="home-hero" id="heroSection">
+        <p class="hero-mark">Search the corpus</p>
+        <h1 class="hero-title">面向中文新闻语料的检索与问答</h1>
+        <p class="hero-copy">
+          输入问题后，页面会展示答案、证据来源、可点击链接、查询轮次以及检索耗时。
+        </p>
+
+        <div class="hero-suggestions">
+          <button class="suggestion-chip" type="button">全国政协副主席、全国工商联主席是谁</button>
+          <button class="suggestion-chip" type="button">5月18日至19日中国-中亚峰会在哪里举行</button>
+          <button class="suggestion-chip" type="button">杭州亚运会男子100米冠军是谁</button>
+        </div>
+      </section>
+
+      <section class="loading-state hidden" id="loadingState" aria-live="polite">
+        <div class="loading-spinner"></div>
+        <div>
+          <p class="loading-title">正在搜索</p>
+          <p class="loading-copy" id="loadingCopy">正在分析问题并准备检索</p>
+        </div>
+      </section>
+
+      <section class="error-banner hidden" id="errorBanner"></section>
+
+      <section class="results-shell hidden" id="resultsArea">
+        <div class="results-meta">
+          <p class="result-countline" id="resultCountline"></p>
+          <h2 class="result-query" id="resultQuery"></h2>
+        </div>
+
+        <div class="results-layout">
+          <section class="results-column">
+            <article class="answer-panel">
+              <div class="panel-topline">
+                <span class="panel-badge" id="answerBadge">答案</span>
+                <span class="panel-reason" id="answerReason"></span>
+              </div>
+              <p class="answer-text" id="answerText"></p>
+              <details class="context-panel">
+                <summary>展开查看用于生成答案的证据上下文</summary>
+                <pre class="context-text" id="contextText"></pre>
+              </details>
+            </article>
+
+            <section class="result-list-section">
+              <div class="section-head">
+                <h3>相关结果</h3>
+                <p>以下链接可直接打开原始来源</p>
+              </div>
+              <div class="result-list" id="evidenceList"></div>
+            </section>
+          </section>
+
+          <aside class="sidebar-column">
+            <section class="sidebar-card">
+              <div class="section-head compact">
+                <h3>搜索统计</h3>
+              </div>
+              <div class="stat-list" id="resultStats"></div>
+            </section>
+
+            <section class="sidebar-card">
+              <div class="section-head compact">
+                <h3>查询改写</h3>
+              </div>
+              <div class="chip-group" id="rewrittenQueries"></div>
+              <div class="chip-group muted" id="finalQueries"></div>
+            </section>
+
+            <section class="sidebar-card">
+              <div class="section-head compact">
+                <h3>轮次记录</h3>
+              </div>
+              <div class="round-list" id="roundList"></div>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="evidenceTemplate">
+    <article class="search-result-card">
+      <div class="result-source-row">
+        <a class="result-source-link" target="_blank" rel="noreferrer"></a>
+        <span class="result-source-date"></span>
+      </div>
+      <a class="result-title-link" target="_blank" rel="noreferrer"></a>
+      <p class="result-snippet"></p>
+      <div class="result-footer">
+        <span class="result-tag result-doc"></span>
+        <span class="result-tag result-chunk"></span>
+      </div>
+    </article>
+  </template>
+
+  <template id="roundTemplate">
+    <article class="round-card">
+      <div class="round-index"></div>
+      <div class="round-body">
+        <div class="round-queries"></div>
+        <div class="round-assessment"></div>
+      </div>
+    </article>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>
